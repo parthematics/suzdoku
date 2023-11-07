@@ -1,24 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// App.tsx
+import React, { useState, useEffect } from "react";
+import SudokuBoard from "./components/SudokuBoard";
+import { SudokuCellData, GameState } from "./components/SudokuBoard";
+import {
+  generateSudokuBoard,
+  generateInitialGameState,
+} from "./utils/sudokuGenerator";
+import { Difficulty } from "./components/DifficultySelector";
+import DifficultySelector from "./components/DifficultySelector";
+
+const initialGameState: GameState = generateInitialGameState(Difficulty.Medium);
 
 function App() {
+  const [difficulty, setDifficulty] = useState<Difficulty>(Difficulty.Medium);
+  const [gameState, setGameState] = useState<GameState>(initialGameState);
+  const [numStrikes, setNumStrikes] = useState<number>(0);
+
+  const handleDifficultyChange = (selectedDifficulty: Difficulty) => {
+    setDifficulty(selectedDifficulty);
+    // Generate a new Sudoku board based on the selected difficulty
+    const { puzzle, solution } = generateSudokuBoard(difficulty);
+    setGameState({
+      board: puzzle,
+      solution: solution,
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <h1 className="text-4xl font-bold mb-4 font-urbanist">suzdoku</h1>
+      <SudokuBoard
+        board={gameState.board}
+        solution={gameState.solution}
+        onCellChange={(newBoard) => {
+          setGameState({ ...gameState, board: newBoard });
+        }}
+      />
+      <DifficultySelector
+        difficulty={difficulty}
+        onDifficultyChange={handleDifficultyChange}
+      />
     </div>
   );
 }
