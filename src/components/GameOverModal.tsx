@@ -10,13 +10,14 @@ const GameOverModal: React.FC<GameOverModalProps> = ({ onClose }) => {
   const [catPic, setCatPic] = useState<string | undefined>();
   const [loading, setLoading] = useState(true);
 
-  const fetchCatPic = async () => {
-    const catData = await getRandomCat();
-    setCatPic(URL.createObjectURL(catData.data));
-    setLoading(false);
-  };
-
-  fetchCatPic();
+  useEffect(() => {
+    const fetchCatPic = async () => {
+      const cat = await getRandomCat();
+      setCatPic(URL.createObjectURL(cat.data));
+      setLoading(false);
+    };
+    fetchCatPic();
+  }, []);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
