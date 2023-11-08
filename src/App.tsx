@@ -10,7 +10,6 @@ import { Difficulty } from "./components/DifficultySelector";
 import DifficultySelector from "./components/DifficultySelector";
 
 const initialGameState: GameState = generateInitialGameState(Difficulty.Medium);
-console.log(initialGameState);
 
 function App() {
   const [difficulty, setDifficulty] = useState<Difficulty>(Difficulty.Medium);
