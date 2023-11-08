@@ -1,5 +1,8 @@
 import React from "react";
+import { useState } from "react";
 import SudokuCell from "./SudokuCell";
+import { isPuzzleSolved } from "../utils/sudokuHelpers";
+import GameOverModal from "./GameOverModal";
 
 export interface GameState {
   board: SudokuCellData[][];
@@ -18,10 +21,18 @@ interface Props {
 }
 
 function SudokuBoard({ board, solution, onCellChange }: Props) {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleSudokuCompletion = () => {
+    if (isPuzzleSolved(board, solution)) {
+      setShowModal(true);
+    }
+  };
+
   return (
-    <div className="sudoku-board mx-auto my-4 p-4 border border-gray-300 rounded-lg">
+    <div className="mx-auto my-4 p-4 md:p-8 border border-gray-300 rounded-lg overflow-x-auto">
       {board.map((row, rowIndex) => (
-        <div className="sudoku-row" key={rowIndex}>
+        <div className="sudoku-row whitespace-nowrap" key={rowIndex}>
           {row.map((cell, colIndex) => (
             <SudokuCell
               key={colIndex}
@@ -38,12 +49,13 @@ function SudokuBoard({ board, solution, onCellChange }: Props) {
                 const newBoard = [...board];
                 newBoard[rowIndex][colIndex].value = newValue;
                 onCellChange(newBoard);
+                handleSudokuCompletion();
               }}
             />
           ))}
         </div>
       ))}
-      {/* Display strike count here */}
+      {showModal && <GameOverModal onClose={() => setShowModal(false)} />}
     </div>
   );
 }

@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface Props {
   value: number | null;
@@ -18,17 +17,19 @@ function SudokuCell({ value, initial, solution, style, onChange }: Props) {
     const handleResult = (isCorrect: boolean, highlightClass: string) => {
       onChange(newValue);
       setHighlightClass(highlightClass);
+      console.log("HIGH: ", highlightClass);
       setTimeout(() => {
-        setHighlightClass("");
         if (!isCorrect) {
           onChange(null);
         }
+        setHighlightClass("");
+        console.log("HIGH: ", highlightClass);
       }, 1000);
     };
 
     if (!isNaN(newValue) && newValue >= 1 && newValue <= 9) {
       const isCorrect = solution === newValue;
-      handleResult(isCorrect, isCorrect ? "bg-green-200" : "bg-red-200");
+      handleResult(isCorrect, isCorrect ? "bg-green" : "bg-red");
     } else {
       onChange(null);
     }
@@ -41,9 +42,9 @@ function SudokuCell({ value, initial, solution, style, onChange }: Props) {
       readOnly={initial}
       onChange={handleChange}
       style={style}
-      className={`sudoku-cell ${
-        initial ? "bg-gray-200" : "bg-white"
-      } w-12 h-12 text-center border border-gray-300 rounded-sm ${highlightClass}`}
+      className={`${
+        initial ? "bg-gray-200" : highlightClass ? highlightClass : "bg-white"
+      } w-10 h-10 md:w-12 md:h-12 text-center font-urbanist border border-gray-300 rounded-sm`}
     />
   );
 }

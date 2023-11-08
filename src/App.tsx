@@ -1,15 +1,16 @@
 // App.tsx
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SudokuBoard from "./components/SudokuBoard";
-import { SudokuCellData, GameState } from "./components/SudokuBoard";
+import { GameState } from "./components/SudokuBoard";
 import {
   generateSudokuBoard,
   generateInitialGameState,
-} from "./utils/sudokuGenerator";
+} from "./utils/sudokuHelpers";
 import { Difficulty } from "./components/DifficultySelector";
 import DifficultySelector from "./components/DifficultySelector";
 
 const initialGameState: GameState = generateInitialGameState(Difficulty.Medium);
+console.log(initialGameState);
 
 function App() {
   const [difficulty, setDifficulty] = useState<Difficulty>(Difficulty.Medium);
@@ -28,7 +29,7 @@ function App() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-4xl font-bold mb-4 font-urbanist">suzdoku</h1>
+      <h1 className="text-6xl font-thin mb-4 font-urbanist">suzdoku</h1>
       <SudokuBoard
         board={gameState.board}
         solution={gameState.solution}
