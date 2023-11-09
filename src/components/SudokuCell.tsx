@@ -17,13 +17,11 @@ function SudokuCell({ value, initial, solution, style, onChange }: Props) {
     const handleResult = (isCorrect: boolean, highlightClass: string) => {
       onChange(newValue);
       setHighlightClass(highlightClass);
-      console.log("HIGH: ", highlightClass);
       setTimeout(() => {
         if (!isCorrect) {
           onChange(null);
         }
         setHighlightClass("");
-        console.log("HIGH: ", highlightClass);
       }, 1000);
     };
 

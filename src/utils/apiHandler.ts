@@ -1,7 +1,11 @@
 import axios from "axios";
 
-const api = axios.create({
+const catApi = axios.create({
   baseURL: "https://cataas.com",
+});
+
+const dogApi = axios.create({
+  baseURL: "https://dog.ceo/api",
 });
 
 const catchphrases = [
@@ -21,6 +25,9 @@ const catchphrases = [
   "kiss pls!",
   "make a wish!",
   "i'm h'd...",
+  "i'm just d!",
+  "wanna gym?",
+  "do u hate me?",
 ];
 
 const getRandomElement = (arr: any[]) =>
@@ -28,8 +35,12 @@ const getRandomElement = (arr: any[]) =>
 
 export function getRandomCat() {
   const catchphrase = getRandomElement(catchphrases);
-  return api.get("/cat/says/" + encodeURIComponent(catchphrase), {
+  return catApi.get("/cat/says/" + encodeURIComponent(catchphrase), {
     params: { fontColor: "white", fontSize: 20, type: "square" },
     responseType: "blob",
   });
+}
+
+export function getRandomDog() {
+  return dogApi.get("/breeds/image/random");
 }
