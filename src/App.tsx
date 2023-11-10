@@ -51,6 +51,11 @@ function App() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-6xl font-thin mb-4 font-urbanist">suzdoku</h1>
+      {!funMode && (
+        <p className="text-center font-urbanist text-xl font-bold">
+          {`strikes: ${strikes}`}
+        </p>
+      )}
       <SudokuBoard
         board={gameState.board}
         solution={gameState.solution}
@@ -71,11 +76,6 @@ function App() {
           }}
           userLost={userLost}
         />
-      )}
-      {!funMode && (
-        <p className="text-center font-urbanist text-xl font-bold mt-3 mb-2">
-          {`strikes: ${strikes}`}
-        </p>
       )}
       <div className="mt-2">
         <label
