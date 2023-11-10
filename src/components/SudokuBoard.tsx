@@ -1,8 +1,5 @@
 import React from "react";
-import { useState } from "react";
 import SudokuCell from "./SudokuCell";
-import { isPuzzleSolved } from "../utils/sudokuHelpers";
-import GameOverModal from "./GameOverModal";
 
 export interface GameState {
   board: SudokuCellData[][];
@@ -18,17 +15,15 @@ interface Props {
   board: SudokuCellData[][];
   solution: SudokuCellData[][];
   onCellChange: (newBoard: SudokuCellData[][]) => void;
+  onIncorrectValue: () => void;
 }
 
-function SudokuBoard({ board, solution, onCellChange }: Props) {
-  const [showModal, setShowModal] = useState(false);
-
-  const handleSudokuCompletion = () => {
-    if (isPuzzleSolved(board, solution)) {
-      setShowModal(true);
-    }
-  };
-
+function SudokuBoard({
+  board,
+  solution,
+  onCellChange,
+  onIncorrectValue,
+}: Props) {
   return (
     <div className="mx-auto my-4 p-4 md:p-8 border border-gray-300 rounded-lg overflow-x-auto">
       {board.map((row, rowIndex) => (
@@ -49,13 +44,12 @@ function SudokuBoard({ board, solution, onCellChange }: Props) {
                 const newBoard = [...board];
                 newBoard[rowIndex][colIndex].value = newValue;
                 onCellChange(newBoard);
-                handleSudokuCompletion();
               }}
+              onIncorrectValue={onIncorrectValue}
             />
           ))}
         </div>
       ))}
-      {showModal && <GameOverModal onClose={() => setShowModal(false)} />}
     </div>
   );
 }
