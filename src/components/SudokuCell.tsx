@@ -6,9 +6,17 @@ interface Props {
   solution: number | null;
   style: React.CSSProperties;
   onChange: (newValue: number | null) => void;
+  onIncorrectValue: () => void;
 }
 
-function SudokuCell({ value, initial, solution, style, onChange }: Props) {
+function SudokuCell({
+  value,
+  initial,
+  solution,
+  style,
+  onChange,
+  onIncorrectValue,
+}: Props) {
   const [highlightClass, setHighlightClass] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,13 +25,12 @@ function SudokuCell({ value, initial, solution, style, onChange }: Props) {
     const handleResult = (isCorrect: boolean, highlightClass: string) => {
       onChange(newValue);
       setHighlightClass(highlightClass);
-      console.log("HIGH: ", highlightClass);
       setTimeout(() => {
         if (!isCorrect) {
+          onIncorrectValue();
           onChange(null);
         }
         setHighlightClass("");
-        console.log("HIGH: ", highlightClass);
       }, 1000);
     };
 
