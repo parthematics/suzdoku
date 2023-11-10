@@ -49,6 +49,7 @@ function SudokuCell({
       readOnly={initial}
       onChange={handleChange}
       style={style}
+      inputMode="numeric"
       className={`${
         initial ? "bg-gray-200" : highlightClass ? highlightClass : "bg-white"
       } w-10 h-10 md:w-12 md:h-12 text-center font-urbanist border border-gray-300 rounded-sm`}
