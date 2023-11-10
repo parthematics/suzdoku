@@ -77,7 +77,7 @@ function App() {
           userLost={userLost}
         />
       )}
-      <div className="mt-2">
+      <div className="mt-4">
         <label
           className="inline-block pr-[0.15rem] hover:cursor-pointer font-urbanist"
           htmlFor="flexSwitchCheckDefault"
