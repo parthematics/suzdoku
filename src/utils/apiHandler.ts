@@ -4,10 +4,6 @@ const catApi = axios.create({
   baseURL: "https://cataas.com",
 });
 
-const dogApi = axios.create({
-  baseURL: "https://dog.ceo/api",
-});
-
 const winnerCatchphrases = [
   "u fw me?",
   "meow?",
@@ -67,12 +63,20 @@ export function getRandomCat({ loser }: { loser: boolean }) {
   const catchphrase = loser
     ? getRandomElement(loserCatchphrases)
     : getRandomElement(winnerCatchphrases);
+  const catUrl = new URL(`https://cataas.com/cat/says/${catchphrase}`);
+  catUrl.searchParams.set("fontColor", "white");
+  catUrl.searchParams.set("fontSize", "20");
+  catUrl.searchParams.set("type", "square");
+
+  return catUrl.toString();
+}
+
+export function getRandomCatAxios({ loser }: { loser: boolean }) {
+  const catchphrase = loser
+    ? getRandomElement(loserCatchphrases)
+    : getRandomElement(winnerCatchphrases);
   return catApi.get("/cat/says/" + encodeURIComponent(catchphrase), {
     params: { fontColor: "white", fontSize: 20, type: "square" },
     responseType: "blob",
   });
-}
-
-export function getRandomDog() {
-  return dogApi.get("/breeds/image/random");
 }
