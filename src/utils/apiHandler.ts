@@ -8,7 +8,7 @@ const winnerCatchphrases = [
   "u fw me?",
   "meow?",
   "i'm tired...",
-  "not really! (krish voice)"
+  "not really! (krish voice)",
   "i love u!",
   "you literally hate me...",
   "inshallah bro!",
