@@ -45,6 +45,7 @@ const winnerCatchphrases = [
   "goobie no stink",
   "hmph >:(",
   "chodelerone bodelerone",
+  "XP - OH NO OH NO OH NO!",
   "you must have stinky burps",
 ];
 
