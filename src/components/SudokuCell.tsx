@@ -1,59 +1,48 @@
-import React, { useState } from "react";
+import React from "react";
 
 interface Props {
   value: number | null;
   initial: boolean;
-  solution: number | null;
   style: React.CSSProperties;
-  onChange: (newValue: number | null) => void;
-  onIncorrectValue: () => void;
+  isSelected: boolean;
+  feedback?: "correct" | "incorrect";
+  onSelect: () => void;
 }
 
 function SudokuCell({
   value,
   initial,
-  solution,
   style,
-  onChange,
-  onIncorrectValue,
+  isSelected,
+  feedback,
+  onSelect,
 }: Props) {
-  const [highlightClass, setHighlightClass] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = parseInt(e.target.value);
-
-    const handleResult = (isCorrect: boolean, highlightClass: string) => {
-      onChange(newValue);
-      setHighlightClass(highlightClass);
-      setTimeout(() => {
-        if (!isCorrect) {
-          onIncorrectValue();
-          onChange(null);
-        }
-        setHighlightClass("");
-      }, 1000);
-    };
-
-    if (!isNaN(newValue) && newValue >= 1 && newValue <= 9) {
-      const isCorrect = solution === newValue;
-      handleResult(isCorrect, isCorrect ? "bg-green" : "bg-red");
-    } else {
-      onChange(null);
-    }
-  };
+  const backgroundClass = initial
+    ? "bg-gray-200"
+    : feedback === "correct"
+      ? "bg-green"
+      : feedback === "incorrect"
+        ? "bg-red"
+        : "bg-white";
 
   return (
-    <input
-      type="text"
-      value={value || ""}
-      readOnly={initial}
-      onChange={handleChange}
+    <button
+      type="button"
+      onClick={onSelect}
       style={style}
-      inputMode="numeric"
       className={`${
-        initial ? "bg-gray-200" : highlightClass ? highlightClass : "bg-white"
-      } w-10 h-10 md:w-12 md:h-12 text-center font-urbanist border border-gray-300 rounded-sm`}
-    />
+        backgroundClass
+      } w-10 h-10 md:w-12 md:h-12 text-center font-urbanist border border-gray-300 rounded-sm align-middle ${
+        isSelected ? "ring-2 ring-blue-400 ring-inset" : ""
+      } ${initial ? "font-semibold text-gray-700" : "text-gray-900"} `}
+      aria-label={
+        initial
+          ? `Given cell value ${value ?? ""}`
+          : `Sudoku cell ${value ?? "empty"}`
+      }
+    >
+      {value ?? ""}
+    </button>
   );
 }
 
