@@ -36,6 +36,15 @@ const winnerCatchphrases = [
   "good job bubba",
   "can we cuddle?...",
   "1, 2, 3, jump!",
+  // Suz added in 2026!
+  "goob & goobie!",
+  "that's so bode",
+  "i want some lubba dubba",
+  "fishy fishy!",
+  "honk shoo",
+  "goobie no stink",
+  "hmph >:(",
+  "chodelerone bodelerone",
 ];
 
 const loserCatchphrases = [
